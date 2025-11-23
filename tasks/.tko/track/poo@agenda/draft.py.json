@@ -1,0 +1,19 @@
+{
+    "patches": [
+        {
+            "label": "2025-11-23_01-05-24",
+            "content": "@@ -1,104 +1,32 @@\n-class Fone:%0A    def __init__(self, nome: str, fone: int):%0A        self.__nome = nome%0A        self.__\n+@@ -97,101 +97,19 @@%0A f.__%0A-\n nume\n@@ -34,18 +34,22 @@\n o = fone\n-%0A%0A\n+%250A%250A\n         \n@@ -58,33 +58,35 @@\n f __str__(self):\n-%0A\n+%250A\n             retu\n@@ -93,10 +93,14 @@\n rn f\n-%22%7B\n+%2522%257B\n self\n@@ -110,11 +110,15 @@\n nome\n-%7D:%7B\n+%257D:%257B\n self\n@@ -130,105 +130,34 @@\n mero\n-%7D%22%0A%0Aclass Contact:%0A    def __init__(self):%0A        self.favoritos: Fone %7C None = %5B%5D%0A        %0A        \n+%257D%2522%0A+fone = fone%0A %250A%250Acl%0A\n",
+            "lines": "5"
+        },
+        {
+            "label": "2025-11-23_01-12-05",
+            "content": "@@ -272,265 +272,21 @@\n  %5B%5D%0A\n-%0A%0Aclass Agenda(self):%0A    %0A%0A%0Adef main():%0A    agenda = Agenda()%0A    while True:%0A        line = input()%0A        print(f%22$%7Bline%7D%22)%0A        args = line.split()%0A%0A        if args%5B0%5D == %22end%22:%0A            break%0A        elif args%5B0%5D == %22show%22:%0A            print(agenda)\n+        %0A        \n",
+            "lines": "13"
+        },
+        {
+            "label": "2025-11-23_01-19-20",
+            "content": "class Fone:\n    def __init__(self, nome: str, fone: int):\n        self.__nome = nome\n        self.__numero = fone\n\n        def __str__(self):\n            return f\"{self.__nome}:{self.__numero}\"\n\nclass Contact:\n    def __init__(self):\n        self.favoritos: Fone | None = []\n\n\nclass Agenda(self):\n    \n\n\ndef main():\n    agenda = Agenda()\n    while True:\n        line = input()\n        print(f\"${line}\")\n        args = line.split()\n\n        if args[0] == \"end\":\n            break\n        elif args[0] == \"show\":\n            print(agenda)",
+            "lines": "28"
+        }
+    ]
+}
