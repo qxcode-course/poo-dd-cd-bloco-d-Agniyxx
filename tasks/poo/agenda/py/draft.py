@@ -4,43 +4,52 @@ class Fone:
         self.__number = number
         
         def getId(self):
+            return self.__id
 
         def getNumber(self):
-         
+            return self.__number
 
-
-         def __str__(self):
+        def __str__(self):
             return f"{self.__id}:{self.__number}"
 
 class Contact:
     def __init__(self, name: str):
         self.name = name
-        self.fones = []
+        self.fones: list[Fone] = []
         self.isFavorits = False
 
         def addFone(self, id: str, number: str):
+            new_fone = Fone(id, number):
+            if new_fone.isValid():
+                self.fones.append(new_fone)
 
         def rmFone(self, index: int):
+            if 0 <= index < len(self.fones):
+                self.fones.pop(index)
 
         def toogleFavorited(self):
 
+
+
         def isFavoroted(self):
+
 
 
         def __str__(self):
             fones_str = ", ".join(str(f) for f in self.fones)
             return f"{self.name} : {self.fones_str}"
 
-class Agenda(self):
-    self.contacts: []
+class Agenda:
+    def __init__(self):
+        self.contacts: list[Contact] = []
 
-        def addContact(self):
+        def addContact(self, name: str, fones: list[Fone]):
 
-        def getContact(self):
+        def getContact(self, name: str):
         
-        def rmContact(self):
+        def rmContact(self, nsme: str):
         
-        def search(self):
+        def search(self, pattern: str):
         
         def getFavorited(self):
         
@@ -61,3 +70,10 @@ def main():
             break
         elif args[0] == "show":
             print(agenda)
+        elif args[0] == "rmFone":
+            agenda.removeFone()
+        elif args[0] == "rm":
+            agenda.remove()
+        elif args[0] == "tFav":
+            agenda.toogleFavorite()
+            
