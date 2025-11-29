@@ -30,7 +30,7 @@ class Contact:
     def toogleFavorited(self):
         self.favorited = not self.favorited
 
-    def isFavoroted(self):
+    def isFavorited(self):
             return self.favorited
         
     def getFones(self):
@@ -45,7 +45,7 @@ class Contact:
     def __str__(self):
         fav_str = "@" if self.favorited else "-"
         fones_str = ", ".join(str(f) for f in self.fones)
-        return f"{fav_str} [{self.name}, {self.fones_str}]"
+        return f"{fav_str} [{self.name}, {fones_str}]"
 
 class Agenda:
     def __init__(self):
@@ -78,12 +78,25 @@ class Agenda:
         find = self.findByName(name)
         if find != -1:
             self.contacts.pop(find)
-
     
+    def search(self, pattern: str):
+        results: list[Contact] = []
+        pattern_lower = pattern.lower()
 
+        for contact in self.contacts:
+            contact_str_lower = str(contact).lower()
+            if pattern_lower in contact_str_lower:
+                results.append(contact)
+        return results
+
+    def getFavorite(self):
+        return [contact for contact in self.contacts if contact.isFaviroted()]
     
-
-
+    def getContacts(self):
+        return self.contacts
+    
+    def __str__(self):
+        return f"\n".join(str(contact) for contact in self.contacts)
 
 def main():
     while True:
@@ -97,8 +110,6 @@ def main():
             break
         elif args[0] == "show":
             print(agenda)
-        elif args[0] == "add":
-            agenda.addContact()
         elif args[0] == "rmFone":
             agenda.rmContact()
         elif args[0] == "tfav":
