@@ -1,22 +1,37 @@
+def _fones(fones_args: list[str]):
+        fones: list[Fone] = []
+        for fone_arg in fones_args:
+            parts = fone_arg.split(':', 1)
+            if len(parts) == 2:
+                fones.append(Fone(parts[0], parts[1]))
+        return fones
+    
 class Fone:
-    def __init__(self, id: str, number: int):
+    def __init__(self, id: str, number: str):
         self.__id = id
         self.__number = number
         
-        def getId(self):
-            return self.__id
+    def getId(self):
+        return self.__id
 
-        def getNumber(self):
-            return self.__number
+    def getNumber(self):
+        return self.__number
+    
+    def isValid(self):
+        valid = "0123456789"
+        for c in self.__number:
+            if c not in valid:
+                return False
+        return True
 
-        def __str__(self):
-            return f"{self.__id}:{self.__number}"
+    def __str__(self):
+        return f"{self.__id}:{self.__number}"
 
 class Contact:
     def __init__(self, name: str):
         self.name = name
         self.fones: list[Fone] = []
-        self.isFavorits = False
+        self.favorits = False
 
     def addFone(self, id: str, number: str):
         new_fone = Fone(id, number)
@@ -28,24 +43,24 @@ class Contact:
             self.fones.pop(index)
 
     def toogleFavorited(self):
-        self.favorited = not self.favorited
+        self.favorits = not self.favorits
 
     def isFavorited(self):
-            return self.favorited
+        return self.favorits
         
     def getFones(self):
         return self.fones
 
-    def getNames(self):
+    def getName(self):
         return self.name
 
-    def setNames(self, name: str):
+    def setName(self, name: str):
         self.name = name
 
     def __str__(self):
-        fav_str = "@" if self.favorited else "-"
+        fav_str = "@" if self.favorits else "-"
         fones_str = ", ".join(str(f) for f in self.fones)
-        return f"{fav_str} [{self.name}, {fones_str}]"
+        return f"{fav_str} {self.name} [{fones_str}]"
 
 class Agenda:
     def __init__(self):
@@ -55,20 +70,21 @@ class Agenda:
         for i, contact in enumerate(self.contacts):
             if contact.getName() == name:
                 return i
-            return -1
+        return -1
 
     def addContact(self, name: str, fones: list[Fone]):
         find = self.findByName(name)
-        if find != 1:
+        if find != -1:
             contact_exist = self.contacts[find]
             for fone in fones:
                 contact_exist.addFone(fone.getId(), fone.getNumber())
         else:
-            new_contact = Contact
+            new_contact = Contact(name)
         for fone in fones:
             new_contact.addFone(fone.getId(), fone.getNumber())
-            self.contacts.append(new_contact)
-            self.contacts.sort(key=lambda c: c.getNames())
+
+        self.contacts.append(new_contact)
+        self.contacts.sort(key=lambda c: c.getName())
 
     def getContact(self, name: str):
         find = self.findByName(name)
@@ -90,7 +106,7 @@ class Agenda:
         return results
 
     def getFavorite(self):
-        return [contact for contact in self.contacts if contact.isFaviroted()]
+        return [contact for contact in self.contacts if contact.isFavorited()]
     
     def getContacts(self):
         return self.contacts
@@ -99,8 +115,8 @@ class Agenda:
         return f"\n".join(str(contact) for contact in self.contacts)
 
 def main():
+    agenda = Agenda()
     while True:
-        agenda = Agenda()
     
         line = input()
         print(f"${line}")
@@ -110,12 +126,27 @@ def main():
             break
         elif args[0] == "show":
             print(agenda)
+        elif args[0] == "add":
+            name = args[1]
+            fones_list = _fones(args[2:])
+            agenda.addContact(name, fones_list)
         elif args[0] == "rmFone":
-            agenda.rmContact()
+            name = args[1]
+            agenda.rmContact(name)
+        elif args[0] == "rm":
+            name = args[1]
+            agenda.rmContact(name)
+        elif args[0] == "search":
+            pattern = args[1]
+            results = agenda.search(pattern) 
+            agenda.search(results)    
         elif args[0] == "tfav":
-            agenda.toogleFavorited()
-        elif args[0] == "tFav":
-            agenda.toogleFavorite()
+            contact_tfav = args[1]
+            agenda.toogleFavorited(contact_tfav)
+        elif args[0] == "favs":
+            fav = args[1]
+            agenda.getFavorite(fav)
+        else:
+            print("fail: comando inválido")
         
-main()
-            
+main()        
