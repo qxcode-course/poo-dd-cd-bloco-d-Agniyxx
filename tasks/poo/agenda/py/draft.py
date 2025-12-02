@@ -131,11 +131,13 @@ def main():
             fones_list = _fones(args[2:])
             agenda.addContact(name, fones_list)
         elif args[0] == "rmFone":
+            
             name = args[1]
             agenda.rmContact(name)
         elif args[0] == "rm":
+            contact = agenda.getContact(name)
             name = args[1]
-            agenda.rmContact(name)
+            contact.rmContact(name)
         elif args[0] == "search":
             pattern = args[1]
             results = agenda.search(pattern) 
