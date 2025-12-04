@@ -82,11 +82,6 @@ class Agenda:
             new_contact = Contact(name)
             for fone in fones:
                 new_contact.addFone(fone.getId(), fone.getNumber())
-            return
-        
-        new_contact = Contact(name)
-        for fone in fones:
-            new_contact.addFone(fone.getId(), fone.getNumber())
 
         self.contacts.append(new_contact)
         self.contacts.sort(key=lambda c: c.getName())
@@ -135,11 +130,10 @@ def main():
             name = args[1]
             fones_list = _fones(args[2:])
             agenda.addContact(name, fones_list)
-        elif args[0] == "rmFone": 
-            contact = agenda.getContact(name)
+        elif args[0] == "rmFone":
+            
             name = args[1]
-            index = int(args[2])
-            agenda.rmFone(contact)
+            agenda.rmContact(name)
         elif args[0] == "rm":
             contact = agenda.getContact(name)
             name = args[1]
@@ -147,12 +141,13 @@ def main():
         elif args[0] == "search":
             pattern = args[1]
             results = agenda.search(pattern) 
+            agenda.search(results)    
         elif args[0] == "tfav":
-            name = args[1]
-            contact = agenda.getContact(name)
-            contact.toogleFavorited()
+            contact_tfav = args[1]
+            agenda.toogleFavorited(contact_tfav)
         elif args[0] == "favs":
-            fav = agenda.getFavorite()
+            fav = args[1]
+            agenda.getFavorite(fav)
         else:
             print("fail: comando inválido")
         
